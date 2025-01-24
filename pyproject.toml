@@ -9,7 +9,9 @@ readme = "README.md"
 python = "^3.11"
 requests = "^2.32.3"
 django = "~4.2"
-
+psycopg = { version = "3.1.*", extras = ["binary", "pool"] }
+django-countries = "^7.6.1"
+django-seed = "^0.3.1"
 
 [build-system]
 requires = ["poetry-core"]

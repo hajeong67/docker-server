@@ -21,3 +21,5 @@ class Wheel(models.Model):
 
     def __str__(self):
         return self.name
+
+# class PythonPackage

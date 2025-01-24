@@ -16,6 +16,7 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+GDAL_LIBRARY_PATH = r"C:\Users\user\miniforge3\Library\bin\gdal.dll"
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -38,13 +39,18 @@ SYSTEM_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.gis'
     ]
 
-THIRD_PARTY_APPS = []
+THIRD_PARTY_APPS = [
+    'django_countries',
+    'django_seed'
+]
 
 CUSTOM_APPS = [
     'pypackages.apps.PypackagesConfig',
-    'mylink.apps.MylinkConfig'
+    'mylink.apps.MylinkConfig',
+    'users.apps.UsersConfig'
     ]
 
 INSTALLED_APPS = SYSTEM_APPS + THIRD_PARTY_APPS + CUSTOM_APPS
@@ -64,7 +70,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -83,12 +89,12 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 
 # Password validation
@@ -115,11 +121,11 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Seoul'
 
 USE_I18N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
@@ -132,5 +138,30 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-MEDIA_URL = '/media/'  # URL 경로
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/uploads/'  # URL 경로
+MEDIA_ROOT = BASE_DIR / 'uploads'
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#         'NAME': 'my_db',
+#         'USER': 'postgres',
+#         'PASSWORD': '1234',
+#     }
+# }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'HOST': 'localhost',
+        'PORT': '5432',
+        'NAME': 'my_db',
+        'USER': 'postgres',
+        'PASSWORD': '1234',
+    }
+}
+
+# Auth
+AUTH_USER_MODEL = 'users.User'
