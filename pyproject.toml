@@ -4,6 +4,9 @@ version = "0.1.0"
 description = ""
 authors = ["hajeong <happykhj67@naver.com>"]
 readme = "README.md"
+#redis
+#pyjwt
+#rest pnox
 
 [tool.poetry.dependencies]
 python = "^3.11"
@@ -12,6 +15,9 @@ django = "~4.2"
 psycopg = { version = "3.1.*", extras = ["binary", "pool"] }
 django-countries = "^7.6.1"
 django-seed = "^0.3.1"
+djangorestframework = "^3.15.2"
+markdown = "^3.7"
+django-filter = "^24.3"
 
 [build-system]
 requires = ["poetry-core"]

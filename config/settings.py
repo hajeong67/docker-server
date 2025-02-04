@@ -43,6 +43,9 @@ SYSTEM_APPS = [
     ]
 
 THIRD_PARTY_APPS = [
+    # 'rest',
+    'knox'
+    # 'drf_'
     'django_countries',
     'django_seed'
 ]
@@ -165,3 +168,8 @@ DATABASES = {
 
 # Auth
 AUTH_USER_MODEL = 'users.User'
+
+#
+# 스펙쳐 세팅
+# 캐시 세팅
+# jwt 인증
