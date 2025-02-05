@@ -4,7 +4,7 @@ from .models import Wheel
 class WheelUploadForm(forms.ModelForm):
     class Meta:
         model = Wheel
-        fields = ['file_path']
+        fields = ['whl_file']
         widgets = {
-            'file_path': forms.ClearableFileInput(attrs={'accept': '.whl'}),
+            'whl_file': forms.ClearableFileInput(attrs={'accept': '.whl'}),
         }
