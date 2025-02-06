@@ -18,11 +18,7 @@ from .models import Author, Wheel
 
 @admin.register(Author)
 class AuthorAdmin(admin.ModelAdmin):
-    list_display = [
-        'name',
-        'email',
-    ]
-
+    list_display = ['name','email',]
     fieldsets = (
         (
             'Author INFO', {
@@ -33,7 +29,6 @@ class AuthorAdmin(admin.ModelAdmin):
             }
         ),
     )
-
     readonly_fields = ('name', 'email')
 
 @admin.register(Wheel)
