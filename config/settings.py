@@ -44,10 +44,11 @@ SYSTEM_APPS = [
 
 THIRD_PARTY_APPS = [
     # 'rest',
-    'knox'
+    # 'knox'
     # 'drf_'
     'django_countries',
-    'django_seed'
+    'django_seed',
+    'django_cleanup.apps.CleanupConfig'
 ]
 
 CUSTOM_APPS = [
