@@ -212,6 +212,21 @@ files = [
 Django = ">=4.2"
 
 [[package]]
+name = "django-rest-knox"
+version = "5.0.2"
+description = "Authentication for django rest framework"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "django_rest_knox-5.0.2-py3-none-any.whl", hash = "sha256:694da5d0ad6eb3edbfd7cdc8d69c089fc074e6b0e548e00ff2750bf2fdfadb6f"},
+    {file = "django_rest_knox-5.0.2.tar.gz", hash = "sha256:f283622bcf5d28a6a0203845c065d06c7432efa54399ae32070c61ac03af2d6f"},
+]
+
+[package.dependencies]
+django = ">=4.2"
+djangorestframework = "*"
+
+[[package]]
 name = "django-seed"
 version = "0.3.1"
 description = "Seed your Django project with fake data"
@@ -778,4 +793,4 @@ zstd = ["zstandard (>=0.18.0)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "60f3d845eeae8c01b1cb17897bceae0924adb9739835fac05a1eef610c94e07c"
+content-hash = "e1cd6c4befb85d3a348008e275b19297e46f0fc28e25211d23472f0b2d54d553"

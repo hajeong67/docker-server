@@ -44,7 +44,7 @@ SYSTEM_APPS = [
 
 THIRD_PARTY_APPS = [
     'rest_framework',
-    # 'knox'
+    'knox',
     'drf_spectacular',
     'django_countries',
     'django_seed',
@@ -172,8 +172,11 @@ AUTH_USER_MODEL = 'users.User'
 
 # rest_framework
 REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'knox.auth.TokenAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ],
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
-# 스펙쳐 세팅
 # 캐시 세팅
-# jwt 인증

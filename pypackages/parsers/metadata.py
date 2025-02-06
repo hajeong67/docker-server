@@ -72,6 +72,12 @@ class WheelMetadata:
                 return keywords.split(sep)
         return keywords
 
+    def get_author(self):
+        return self.metadata.get('Author')
+
+    def get_author_email(self):
+        return self.metadata.get('Author-email')
+
     # def to_dict(self):
     #     return {
     #         'name': self.get_name(),

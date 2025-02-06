@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.utils.html import format_html
-from .models import Wheel
+from .models import Author, Wheel
 
 # @admin.register(WatchData)
 # class WatchDataAdmin(admin.ModelAdmin):
@@ -16,11 +16,59 @@ from .models import Wheel
 #             })
 #     )
 
+@admin.register(Author)
+class AuthorAdmin(admin.ModelAdmin):
+    list_display = [
+        'name',
+        'email',
+    ]
+
+    fieldsets = (
+        (
+            'Author INFO', {
+                'fields': [
+                    'name',
+                    'email',
+                ]
+            }
+        ),
+    )
+
+    readonly_fields = ('name', 'email')
+
 @admin.register(Wheel)
 class WheelAdmin(admin.ModelAdmin):
     list_display = ('name', 'version', 'author', 'summary', 'license', 'keywords', 'created_at', 'download_link')
     list_display_links = ('name', 'version', 'created_at')  # 클릭 가능 영역 확장
-    readonly_fields = ('name', 'version', 'author', 'summary', 'license', 'keywords', 'description')
+    fieldsets = (
+        (
+            'Wheel File', {
+                'fields': [
+                    'whl_file',
+                ]
+            }
+        ),
+        (
+            'Metadata INFO', {
+                'fields': [
+                    'name',
+                    'version',
+                    'license',
+                    'summary',
+                    'keywords',
+                    'created_at',
+                ]
+            }
+        ),
+        (
+            'Auth INFO', {
+                'fields': [
+                    'author',
+                ]
+            }
+        )
+    )
+    readonly_fields = ('name', 'version', 'author', 'summary', 'license', 'keywords', 'description', 'created_at',)
 
     def download_link(self, obj):
         if obj.whl_file and obj.whl_file.url:
