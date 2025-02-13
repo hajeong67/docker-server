@@ -44,11 +44,12 @@ SYSTEM_APPS = [
 
 THIRD_PARTY_APPS = [
     'rest_framework',
-    'knox',
+     #'knox',
     'drf_spectacular',
     'django_countries',
     'django_seed',
-    'django_cleanup.apps.CleanupConfig'
+    'django_cleanup.apps.CleanupConfig',
+    "rest_framework_simplejwt.token_blacklist",
 ]
 
 CUSTOM_APPS = [
@@ -173,10 +174,29 @@ AUTH_USER_MODEL = 'users.User'
 # rest_framework
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'knox.auth.TokenAuthentication',
-        'rest_framework.authentication.BasicAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
+        # 'knox.auth.TokenAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        # 'rest_framework.authentication.BasicAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
     ],
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
+
+# JWT 설정
+from datetime import timedelta
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),  # 액세스 토큰 유효 시간
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),  # 리프레시 토큰 유효 시간
+    'ROTATE_REFRESH_TOKENS': True,
+    'BLACKLIST_AFTER_ROTATION': True,
+    'ALGORITHM': 'HS256',
+    'SIGNING_KEY': SECRET_KEY,  # Django의 SECRET_KEY 사용
+    'AUTH_HEADER_TYPES': ('Bearer',),  # Authorization 헤더에서 사용할 접두사
+}
 # 캐시 세팅
+
+#spectular setting
+SPECTACULAR_SETTINGS = {
+    'COMPONENT_SPLIT_REQUEST': True,
+}
