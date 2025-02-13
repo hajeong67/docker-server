@@ -1,17 +1,31 @@
 from rest_framework import serializers
 from .models import Wheel
+from drf_spectacular.utils import extend_schema_serializer, OpenApiExample
 
+@extend_schema_serializer(
+    exclude_fields=['description'],  # 'description' 필드를 스키마에서 제외
+    examples=[
+        OpenApiExample(
+            "Wheel Example",
+            summary="A sample wheel upload",
+            description="An example of uploading a wheel file.",
+            value={
+                "name": "example_wheel",
+                "version": "1.0.0",
+                "whl_file": "path/to/file.whl",
+                "author": 1,
+                "summary": "This is an example wheel.",
+                "license": "MIT",
+                "keywords": "example, wheel",
+            },
+        ),
+    ],
+)
 class PostWheelModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Wheel
         fields = '__all__'
         extra_kwargs = {
             'name': {'required': False},
-            'version': {'required': False}
+            'version': {'required': False},
         }
-
-    # # Object-level validation
-    # def validate(self, data):
-    #     if Wheel.objects.filter(name=data['name'], version=data['version']).exists():
-    #         raise serializers.ValidationError("같은 이름과 버전의 Wheel이 이미 존재합니다.")
-    #     return data
