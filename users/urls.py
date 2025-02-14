@@ -1,9 +1,10 @@
 from django.urls import path
-from . import views
+from .views import LoginPageView
+from django.views.generic import TemplateView
 
 app_name = "users"
 
 urlpatterns = [
-    path('login/', views.LoginView.as_view(), name='login'),
-    path('logout/', views.log_out, name='logout'),
+    path('login/', LoginPageView.as_view(), name='login'),
+    path('index/', TemplateView.as_view(template_name="index.html"), name='index_page'),
 ]

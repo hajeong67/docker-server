@@ -19,11 +19,13 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 
-
 urlpatterns = [
     path('', include('pypackages.urls', namespace='pypackages')),
     path('users/', include('users.urls', namespace='users')),
     path('admin/', admin.site.urls),
+
+    path('api/', include('config.api_urls')),
 ]
 
+# MEDIA 파일 설정
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
