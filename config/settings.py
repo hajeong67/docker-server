@@ -138,6 +138,7 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -191,13 +192,27 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),  # 리프레시 토큰 유효 시간
     'ROTATE_REFRESH_TOKENS': True,
     'BLACKLIST_AFTER_ROTATION': True,
-    'ALGORITHM': 'HS256',
-    'SIGNING_KEY': SECRET_KEY,  # Django의 SECRET_KEY 사용
-    'AUTH_HEADER_TYPES': ('Bearer',),  # Authorization 헤더에서 사용할 접두사
+    'AUTH_HEADER_TYPES': ('Bearer',),  # Authorization 헤더 접두사
 }
 # 캐시 세팅
 
 #spectular setting
 SPECTACULAR_SETTINGS = {
+    'TITLE': "hajeong's API",
+    'DESCRIPTION': "API documentation",
+    'VERSION': "1.0.0",
+    'SERVE_INCLUDE_SCHEMA': False,
+    'SWAGGER_UI_SETTINGS': {
+        'persistAuthorization': True,
+    },
     'COMPONENT_SPLIT_REQUEST': True,
+    'SECURITY_DEFINITIONS': {
+        'Bearer': {
+            'type': 'apiKey',
+            'in': 'header',
+            'name': 'Authorization',
+            'description': "JWT 인증을 위해 'Bearer <your_access_token>' 형식으로 입력하세요.",
+        },
+    },
+    'SECURITY': [{'Bearer': []}],
 }
