@@ -8,6 +8,7 @@ from rest_framework import serializers
 class LogoutSerializer(serializers.Serializer):
     refresh = serializers.CharField(help_text="The refresh token to blacklist")
 
+@extend_schema(tags=["users"])
 class LogoutAPIView(APIView):
     @extend_schema(
         summary="User Logout",

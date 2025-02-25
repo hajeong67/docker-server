@@ -9,7 +9,7 @@ readme = "README.md"
 #rest pnox
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = "^3.10"
 requests = "^2.32.3"
 django = "~4.2"
 psycopg = { version = "3.1.*", extras = ["binary", "pool"] }
@@ -22,6 +22,10 @@ django-cleanup = "^9.0.0"
 drf-spectacular = "^0.28.0"
 django-rest-knox = "^5.0.2"
 djangorestframework-simplejwt = "^5.4.0"
+gunicorn = "^23.0.0"
+poetry-plugin-export = "^1.9.0"
+pillow = "^11.1.0"
+awsebcli = "^3.21.0"
 
 [build-system]
 requires = ["poetry-core"]
