@@ -174,16 +174,16 @@ MEDIA_ROOT = BASE_DIR / 'uploads'
 #     }
 # }
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'HOST': '10.7.200.90',
-        'PORT': '5432',
-        'NAME': 'my_db',
-        'USER': 'postgres',
-        'PASSWORD': '1234',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.contrib.gis.db.backends.postgis',
+#         'HOST': '10.7.200.90',
+#         'PORT': '5432',
+#         'NAME': 'my_db',
+#         'USER': 'postgres',
+#         'PASSWORD': '1234',
+#     }
+# }
 
 # Auth
 AUTH_USER_MODEL = 'users.User'
