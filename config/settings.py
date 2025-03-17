@@ -12,10 +12,12 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
+import requests
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# docker 킬 때는 주석처리하기
 GDAL_LIBRARY_PATH = r"C:\Users\user\miniforge3\Library\bin\gdal.dll"
 
 # Quick-start development settings - unsuitable for production
@@ -25,10 +27,23 @@ GDAL_LIBRARY_PATH = r"C:\Users\user\miniforge3\Library\bin\gdal.dll"
 SECRET_KEY = 'django-insecure-!zhyhfbimg_&nl7c6=y^=j@f&yzy5=+%$5)a)#@2&ew7h2bkci'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = ["10.7.200.90", "localhost"]
+# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.elasticbeanstalk.com', ]
 
+try:
+    token_headers = {"X-aws-ec2-metadata-token-ttl-seconds": "60"}
+    EC2_TOKEN = requests.put('http://169.254.169.254/latest/api/token', headers=token_headers).text
+
+    ip_headers = {"X-aws-ec2-metadata-token": EC2_TOKEN}
+    EC2_IP = requests.get('http://169.254.169.254/latest/meta-data/local-ipv4', headers=ip_headers).text
+    ALLOWED_HOSTS.append(EC2_IP)
+except requests.exceptions.RequestException as error:
+    print("RequestException: ", error)
+except Exception as error:
+    print(error)
 
 # Application definition
 
@@ -39,7 +54,7 @@ SYSTEM_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.gis'
+    # 'django.contrib.gis'
     ]
 
 THIRD_PARTY_APPS = [
@@ -95,12 +110,12 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 
 # Password validation
@@ -138,6 +153,7 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -158,16 +174,16 @@ MEDIA_ROOT = BASE_DIR / 'uploads'
 #     }
 # }
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'HOST': 'localhost',
-        'PORT': '5432',
-        'NAME': 'my_db',
-        'USER': 'postgres',
-        'PASSWORD': '1234',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.contrib.gis.db.backends.postgis',
+#         'HOST': '10.7.200.90',
+#         'PORT': '5432',
+#         'NAME': 'my_db',
+#         'USER': 'postgres',
+#         'PASSWORD': '1234',
+#     }
+# }
 
 # Auth
 AUTH_USER_MODEL = 'users.User'
@@ -191,13 +207,27 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),  # 리프레시 토큰 유효 시간
     'ROTATE_REFRESH_TOKENS': True,
     'BLACKLIST_AFTER_ROTATION': True,
-    'ALGORITHM': 'HS256',
-    'SIGNING_KEY': SECRET_KEY,  # Django의 SECRET_KEY 사용
-    'AUTH_HEADER_TYPES': ('Bearer',),  # Authorization 헤더에서 사용할 접두사
+    'AUTH_HEADER_TYPES': ('Bearer',),  # Authorization 헤더 접두사
 }
 # 캐시 세팅
 
 #spectular setting
 SPECTACULAR_SETTINGS = {
+    'TITLE': "hajeong's API",
+    'DESCRIPTION': "API documentation",
+    'VERSION': "1.0.0",
+    'SERVE_INCLUDE_SCHEMA': False,
+    'SWAGGER_UI_SETTINGS': {
+        'persistAuthorization': True,
+    },
     'COMPONENT_SPLIT_REQUEST': True,
+    'SECURITY_DEFINITIONS': {
+        'Bearer': {
+            'type': 'apiKey',
+            'in': 'header',
+            'name': 'Authorization',
+            'description': "JWT 인증을 위해 'Bearer <your_access_token>' 형식으로 입력하세요.",
+        },
+    },
+    'SECURITY': [{'Bearer': []}],
 }

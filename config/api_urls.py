@@ -3,7 +3,7 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, Spec
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 urlpatterns = [
-    path('pypackages/', include('pypackages.api_urls', namespace='pypackages_api')),
+    path('', include('pypackages.api_urls', namespace='pypackages_api')),
     path('users/', include('users.api_urls', namespace='users_api')),
 
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),

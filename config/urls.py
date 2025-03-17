@@ -18,6 +18,10 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
+from django.http import HttpResponse
+
+def health(request):
+    return HttpResponse(status=200)
 
 urlpatterns = [
     path('', include('pypackages.urls', namespace='pypackages')),
@@ -25,6 +29,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('api/', include('config.api_urls')),
+    path('health', health),
 ]
 
 # MEDIA 파일 설정
